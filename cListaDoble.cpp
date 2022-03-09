@@ -4,6 +4,7 @@ using namespace std;
 class cListaDoble {
 protected:
 	class Node {
+		public:
 		char vocal;
 		Node* siguiente;
 		Node* anterior;
