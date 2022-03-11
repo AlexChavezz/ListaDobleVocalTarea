@@ -15,6 +15,7 @@ public:
     cListaDoble();
     void crearLista();
     void print();
+    void ordenar();
     bool isChar(char);
 };
 
@@ -25,7 +26,7 @@ cListaDoble::cListaDoble() {
 void cListaDoble::print() {
     Node* aux;
     for (aux = list; aux != NULL; aux = aux->siguiente) {
-        cout << aux->vocal;
+        cout << aux->vocal << endl;
     }
 }
 
@@ -77,6 +78,19 @@ void cListaDoble::crearLista() {
     }
 }
 
+void cListaDoble::ordenar() {
+    Node* aux;
+    char vocales[5];
+    int increment = 0;
+    for (aux = list; aux != NULL; aux = aux->siguiente) {
+        vocales[increment] = aux->vocal;
+        increment++;
+    }
+    for (int i = 0; i < 5; i++) {
+        cout << "[ " << i + 1 << " ]: " <<vocales[i]<<endl;
+    }
+}
+
 bool cListaDoble::isChar(char letter) {
     switch (letter) {
 
@@ -106,5 +120,6 @@ int main() {
     cListaDoble* object = new cListaDoble();
     object->crearLista();
     object->print();
+    object->ordenar();
     return 0;
 }
