@@ -1,5 +1,4 @@
 #include <iostream>
-
 using namespace std;
 
 class cListaDoble {
@@ -11,12 +10,13 @@ private:
         Node* anterior;
     };
     Node* list;
+    char vocales[5];
 public:
     cListaDoble();
     void crearLista();
     void print();
     void ordenar();
-    bool isChar(char);
+    bool isVocal(char);
 };
 
 cListaDoble::cListaDoble() {
@@ -32,7 +32,7 @@ void cListaDoble::print() {
 
 void cListaDoble::crearLista() {
     Node* aux = NULL, * aux1 = NULL;
-    char letter;
+    char character;
 
     for (int i = 0; i < 5; i++) {
 
@@ -40,11 +40,11 @@ void cListaDoble::crearLista() {
             list = new Node();
             bool isCorrect;
             do {
-                cout << "Dame la vocal para primer primer Nodo: ";
-                cin >> letter;
-                if (isChar(letter)) {
+                cout << "Dame la vocal para el primer primer Nodo: ";
+                cin >> character;
+                if (isVocal(character)) {
                     isCorrect = true;
-                    list->vocal = letter;
+                    list->vocal = character;
                     aux = list;
                     aux1 = list;
                 }
@@ -62,10 +62,10 @@ void cListaDoble::crearLista() {
             aux1 = aux1->siguiente;
             bool isCorrect;
             do {
-                cout << "Dame la vocal de la siguiente vocal: ";
-                cin >> letter;
-                if (isChar(letter)) {
-                    aux->vocal = letter;
+                cout << "Dame la vocal del siguiente nodo: ";
+                cin >> character;
+                if (isVocal(character)) {
+                    aux->vocal = character;
                     isCorrect = true;
                 }
                 else {
@@ -80,19 +80,42 @@ void cListaDoble::crearLista() {
 
 void cListaDoble::ordenar() {
     Node* aux;
-    char vocales[5];
     int increment = 0;
+
+    //  -> Asingno el valor de cada nodo a una posicion de mi array
+
     for (aux = list; aux != NULL; aux = aux->siguiente) {
         vocales[increment] = aux->vocal;
         increment++;
     }
+
+    // -> Ordenamiento burbuja
+
+    char aux4 = vocales[0];
     for (int i = 0; i < 5; i++) {
-        cout << "[ " << i + 1 << " ]: " <<vocales[i]<<endl;
+        for (int j = 0; j < i; j++) {
+            if (vocales[i] < vocales[j]) {
+                aux4 = vocales[i];
+                vocales[i] = vocales[j];
+                vocales[j] = aux4;
+            }
+        }
     }
+
+    // -> Asignar las vocales ordenadas a mi lista doble
+
+    increment = 0;
+
+    for (aux = list; aux != NULL; aux = aux->siguiente) {
+        aux->vocal = vocales[increment];
+        increment++;
+    }
+    cout << "lista Ordenada Correctamente" << endl;
+
 }
 
-bool cListaDoble::isChar(char letter) {
-    switch (letter) {
+bool cListaDoble::isVocal(char character) {
+    switch (character) {
 
     case 'a':
         return true;
@@ -119,7 +142,30 @@ int main() {
 
     cListaDoble* object = new cListaDoble();
     object->crearLista();
-    object->print();
-    object->ordenar();
+    system("cls");
+
+    int opc;
+
+    do {
+        cout << "Que quieres hacer ahora ?" << endl;
+        cout << "(1) Ordenar\n(2) Imprimir\n(3) Salir\n:  ";
+        cin >> opc;
+
+        switch (opc) {
+        case 1:
+            system("cls");
+            object->ordenar();
+            break;
+        case 2:
+            system("cls");
+            object->print();
+            break;
+        case 3:
+            break;
+        default:
+            break;
+        }
+    } while (opc != 3);
+
     return 0;
 }
